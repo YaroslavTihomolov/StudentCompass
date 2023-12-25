@@ -24,11 +24,11 @@ public class SubjectService {
                 .toList();
     }
 
-    public SubjectInfoDto getSubjectInfo(String universityName, int courseNum, String subjectName) {
+    public SubjectInfoDto getSubjectInfo(String universityName, int courseNum, int subjectId) {
         Course course = getCourse(universityName, courseNum);
         var subjects = course.getSubjects();
         var subject = subjects.stream()
-                .filter(curSubject -> curSubject.getName().equals(subjectName))
+                .filter(curSubject -> curSubject.getId() == subjectId)
                 .findAny();
         return subject.map(SubjectMapper.INSTANCE::infoToDto).orElse(null);
     }

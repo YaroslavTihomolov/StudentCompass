@@ -1,13 +1,14 @@
 package ru.nsu.ccfit.student_compass.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Review {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +20,11 @@ public class Review {
     private String value;
 
     @ManyToOne
-    @JoinColumn(name = "review_id")
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
 }

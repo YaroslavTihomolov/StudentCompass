@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class MaterialDto {
 
-    private Long id;
+    private String name;
+
+    private String author;
 
     private String link;
-
-    private Long subjectId;
 
 }

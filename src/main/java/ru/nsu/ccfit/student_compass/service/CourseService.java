@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nsu.ccfit.student_compass.model.dto.CourseDto;
 import ru.nsu.ccfit.student_compass.model.mapper.CourseMapper;
-import ru.nsu.ccfit.student_compass.repository.CourseRepository;
 import ru.nsu.ccfit.student_compass.repository.UniversityRepository;
 
 import java.util.List;

@@ -1,13 +1,17 @@
 package ru.nsu.ccfit.student_compass.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Material {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,10 +20,20 @@ public class Material {
     private Long id;
 
     @Column
+    private String author;
+
+    @Column
+    private String name;
+
+    @Column
     private String link;
 
     @ManyToOne
-    @JoinColumn(name = "material_id")
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
 }

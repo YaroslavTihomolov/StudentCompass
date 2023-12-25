@@ -7,4 +7,6 @@ public class ReviewDto {
 
     private String value;
 
+    private UserDto user;
+
 }
