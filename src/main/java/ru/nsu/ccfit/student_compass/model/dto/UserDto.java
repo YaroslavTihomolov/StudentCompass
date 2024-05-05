@@ -1,12 +1,8 @@
 package ru.nsu.ccfit.student_compass.model.dto;
 
-import lombok.Data;
+import lombok.Builder;
 
-@Data
-public class UserDto {
-
-    private String firstName;
-
-    private String lastName;
+@Builder
+public record UserDto(Long id, String firstName, String lastName) {
 
 }
