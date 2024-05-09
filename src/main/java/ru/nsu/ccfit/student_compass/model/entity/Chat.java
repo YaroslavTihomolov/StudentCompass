@@ -44,12 +44,12 @@ public class Chat {
     @Setter(value = AccessLevel.PRIVATE)
     @Fetch(FetchMode.JOIN)
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Message> messages = new ArrayList<>();
+    private List<Message> userMessages = new ArrayList<>();
 
     @Nonnull
-    public Chat addMessage(Message message) {
-        messages.add(message);
-        message.setChat(this);
+    public Chat addMessage(Message userMessage) {
+        userMessages.add(userMessage);
+        userMessage.setChat(this);
         return this;
     }
 }

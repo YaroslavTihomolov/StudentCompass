@@ -45,24 +45,24 @@ public class ChatService {
     }
 
     public void addMessage(MessageDto messageDto) {
-        log.info("addMessage:: user add message: " + messageDto.userName());
-        Message message = new Message()
+        log.info("addMessage:: user add userMessage: " + messageDto.userName());
+        Message userMessage = new Message()
             .setUserName(messageDto.userName())
             .setText(messageDto.text());
-        chatRepository.save(findOrThrow(messageDto.chatId()).addMessage(message));
+        chatRepository.save(findOrThrow(messageDto.chatId()).addMessage(userMessage));
     }
 
     @Nonnull
     public List<MessageResponseDto> getMessage(ChatParamDto chatParamDto) {
-        List<Message> messages = messageRepository.findAllByChatId(
+        List<Message> userMessages = messageRepository.findAllByChatId(
             chatParamDto.chatId(),
             PageRequest.of(chatParamDto.numberPage(), chatParamDto.sizePage(), Sort.by("created"))
         );
         User user = userRepository.findById(chatParamDto.userId())
             .orElseThrow(EntityExistsException::new);
 
-        messages.forEach(message -> message.addViewed(user));
-        return messages.stream()
+        userMessages.forEach(message -> message.addViewed(user));
+        return userMessages.stream()
             .map(MessageMapper.INSTANCE::toDto)
             .toList();
     }

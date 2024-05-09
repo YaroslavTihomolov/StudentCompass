@@ -6,10 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,20 +30,24 @@ public class Message {
     @CreationTimestamp
     private Instant created;
 
-    @ManyToMany(mappedBy = "message", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    private Set<User> viewedSet;
+    @ManyToMany
+    @JoinTable(
+        name = "message_user",
+        joinColumns = {@JoinColumn(name = "message_id")},
+        inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private Set<User> users = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
     public void addViewed(User user) {
-        viewedSet.add(user);
+        users.add(user);
     }
 
     @Nonnull
     public Set<String> getViewedNames() {
-        return viewedSet.stream().map(User::getFirstName).collect(Collectors.toSet());
+        return users.stream().map(User::getFirstName).collect(Collectors.toSet());
     }
 }

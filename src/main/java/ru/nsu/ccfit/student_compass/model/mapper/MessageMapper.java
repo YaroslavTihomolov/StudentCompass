@@ -10,7 +10,7 @@ import ru.nsu.ccfit.student_compass.model.entity.Message;
 public interface MessageMapper {
     MessageMapper INSTANCE = Mappers.getMapper(MessageMapper.class);
 
-    @Mapping(target = "viewed", expression = "java(message.getViewedNames())")
-    @Mapping(target = "created", expression = "java(message.getCreated().toString())")
-    MessageResponseDto toDto(Message message);
+    @Mapping(target = "viewed", expression = "java(userMessage.getViewedNames())")
+    @Mapping(target = "created", expression = "java(userMessage.getCreated().toString())")
+    MessageResponseDto toDto(Message userMessage);
 }

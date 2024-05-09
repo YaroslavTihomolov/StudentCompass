@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "_user")
+@Table(name = "user_table")
 @Builder
 @Getter
 @Setter
@@ -37,9 +37,6 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Material> materials;
-
-    @ManyToMany
-    private Set<Message> message;
 
     @Enumerated(EnumType.STRING)
     private Role role;
