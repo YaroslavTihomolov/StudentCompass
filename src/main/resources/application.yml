@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/student_compass
-    username: root
-    password: 6363
+    url: jdbc:postgresql://localhost:5433/student_compass
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

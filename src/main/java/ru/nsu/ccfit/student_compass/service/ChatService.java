@@ -30,7 +30,6 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
     private final MessageRepository messageRepository;
-    private final MessageMapper messageMapper;
 
     @Nonnull
     public Long createChat(CreateChatDto createChatDto) {
@@ -64,7 +63,7 @@ public class ChatService {
 
         messages.forEach(message -> message.addViewed(user));
         return messages.stream()
-            .map(messageMapper::toDto)
+            .map(MessageMapper.INSTANCE::toDto)
             .toList();
     }
 
