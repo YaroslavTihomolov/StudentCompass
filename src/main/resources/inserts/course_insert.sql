@@ -1,0 +1,13 @@
+INSERT INTO public.course (number, id, university_id) VALUES (1, 1, 1);
+INSERT INTO public.course (number, id, university_id) VALUES (2, 2, 1);
+INSERT INTO public.course (number, id, university_id) VALUES (3, 3, 1);
+INSERT INTO public.course (number, id, university_id) VALUES (4, 4, 1);
+INSERT INTO public.course (number, id, university_id) VALUES (1, 5, 2);
+INSERT INTO public.course (number, id, university_id) VALUES (2, 6, 2);
+INSERT INTO public.course (number, id, university_id) VALUES (3, 7, 2);
+INSERT INTO public.course (number, id, university_id) VALUES (4, 8, 2);
+INSERT INTO public.course (number, id, university_id) VALUES (5, 9, 2);
+INSERT INTO public.course (number, id, university_id) VALUES (1, 10, 3);
+INSERT INTO public.course (number, id, university_id) VALUES (2, 11, 3);
+INSERT INTO public.course (number, id, university_id) VALUES (3, 12, 3);
+INSERT INTO public.course (number, id, university_id) VALUES (4, 13, 3);
