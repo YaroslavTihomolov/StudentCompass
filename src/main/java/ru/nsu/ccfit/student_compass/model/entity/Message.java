@@ -31,7 +31,7 @@ public class Message {
     @CreationTimestamp
     private Instant created;
 
-    @OneToMany(mappedBy = "message", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "message", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     private Set<User> viewedSet;
 

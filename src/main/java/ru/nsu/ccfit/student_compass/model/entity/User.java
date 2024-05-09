@@ -38,9 +38,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Material> materials;
 
-    @ManyToOne
-    @JoinColumn(name = "message_id")
-    private Message message;
+    @ManyToMany
+    private Set<Message> message;
 
     @Enumerated(EnumType.STRING)
     private Role role;
