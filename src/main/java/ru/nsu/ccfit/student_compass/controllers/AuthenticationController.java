@@ -19,6 +19,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+        System.out.println(request);
         var token = service.register(request);
         if (token == null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
