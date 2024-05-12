@@ -8,6 +8,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -38,7 +41,12 @@ public class Chat {
 
     @BatchSize(size = 10)
     @Fetch(FetchMode.SELECT)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "chat_user",
+        joinColumns = {@JoinColumn(name = "chat_id")},
+        inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
     private Set<User> user = new HashSet<>();
 
     @Setter(value = AccessLevel.PRIVATE)

@@ -13,6 +13,7 @@ import ru.nsu.ccfit.student_compass.model.mapper.ReviewMapper;
 import ru.nsu.ccfit.student_compass.repository.ReviewRepository;
 import ru.nsu.ccfit.student_compass.repository.SubjectRepository;
 import ru.nsu.ccfit.student_compass.repository.UserRepository;
+import ru.nsu.ccfit.student_compass.utils.JwtUtils;
 
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class ReviewService {
 
     @Transactional
     public SubjectInfoDto storeReview(String text, String jwt, String subjectId) {
-        String email = decodeJWT(jwt);
+        String email = JwtUtils.decodeJWT(jwt);
         var user = userRepository.findByEmail(email);
         var subject = subjectRepository.findById(Long.valueOf(subjectId));
         var review = Review.builder()

@@ -1,15 +1,15 @@
 package ru.nsu.ccfit.student_compass.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.nsu.ccfit.student_compass.model.dto.ChatDto;
 import ru.nsu.ccfit.student_compass.model.dto.ChatParamDto;
 import ru.nsu.ccfit.student_compass.model.dto.CreateChatDto;
 import ru.nsu.ccfit.student_compass.model.dto.MessageDto;
@@ -40,5 +40,13 @@ public class ChatController {
     @GetMapping
     public List<MessageResponseDto> getMessage(@Valid ChatParamDto chatParamDto) {
         return chatService.getMessage(chatParamDto);
+    }
+
+    @GetMapping("/chat/all")
+    public List<ChatDto> getChats(
+        @RequestHeader("Authorization") String authorizationHeader
+    ) {
+        String jwt = authorizationHeader.substring(7);
+        return chatService.getChats(jwt);
     }
 }
