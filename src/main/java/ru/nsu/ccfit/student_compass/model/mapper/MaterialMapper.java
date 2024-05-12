@@ -11,6 +11,4 @@ public interface MaterialMapper {
     MaterialMapper INSTANCE = Mappers.getMapper(MaterialMapper.class);
 
     MaterialDto toDto(Material material);
-
-
 }
