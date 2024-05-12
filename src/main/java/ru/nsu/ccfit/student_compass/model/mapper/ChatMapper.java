@@ -6,10 +6,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ru.nsu.ccfit.student_compass.model.dto.ChatDto;
 import ru.nsu.ccfit.student_compass.model.entity.Chat;
-import ru.nsu.ccfit.student_compass.model.entity.User;
 
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Mapper
 public interface ChatMapper {
@@ -20,11 +18,8 @@ public interface ChatMapper {
     ChatDto toDto(Chat chat);
 
     @Nonnull
-    default Map<Long, String> getUsers(Chat chat) {
-        return chat.getUser().stream().collect(Collectors.toMap(
-                User::getId,
-                value -> "%s %s".formatted(value.getFirstName(), value.getLastName())
-            )
-        );
+    default List<String> getUsers(Chat chat) {
+        return chat.getUser().stream().map(value -> "%s %s".formatted(value.getFirstName(), value.getLastName())).toList();
+
     }
 }

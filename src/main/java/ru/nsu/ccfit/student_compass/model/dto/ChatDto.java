@@ -2,12 +2,12 @@ package ru.nsu.ccfit.student_compass.model.dto;
 
 import lombok.Builder;
 
-import java.util.Map;
+import java.util.List;
 
 @Builder
 public record ChatDto(
-    Long chatId,
-    String name,
-    Map<Long, String> users
+        Long id,
+        String name,
+        List<String> users
 ) {
 }

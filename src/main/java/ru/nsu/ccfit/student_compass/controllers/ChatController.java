@@ -42,7 +42,7 @@ public class ChatController {
         return chatService.getMessage(chatParamDto);
     }
 
-    @GetMapping("/chat/all")
+    @GetMapping("/all")
     public List<ChatDto> getChats(
         @RequestHeader("Authorization") String authorizationHeader
     ) {
