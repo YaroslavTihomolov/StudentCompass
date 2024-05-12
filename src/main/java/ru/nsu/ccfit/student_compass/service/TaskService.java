@@ -15,6 +15,7 @@ import ru.nsu.ccfit.student_compass.repository.OfferRepository;
 import ru.nsu.ccfit.student_compass.repository.SubjectRepository;
 import ru.nsu.ccfit.student_compass.repository.TaskRepository;
 import ru.nsu.ccfit.student_compass.repository.UserRepository;
+import ru.nsu.ccfit.student_compass.utils.JpaUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,46 +37,41 @@ public class TaskService {
     public TaskDto createTask(String title, String description, String startPrice, Long subjectId) {
         log.info("Create task: " + title);
         return TaskMapper.INSTANCE.toDto(
-                taskRepository.save(
-                        new Task()
-                                .setTitle(title)
-                                .setStartPrice(startPrice)
-                                .setDescription(description)
-                                .setSubject(findByIdOrThrow(subjectRepository, subjectId))
-                )
+            taskRepository.save(
+                new Task()
+                    .setTitle(title)
+                    .setStartPrice(startPrice)
+                    .setDescription(description)
+                    .setSubject(JpaUtils.findByIdOrThrow(subjectRepository, subjectId))
+            )
         );
     }
 
     public List<TaskDto> getTasks() {
         log.info("Get all tasks");
         return taskRepository.findAll().stream()
-                .map(TaskMapper.INSTANCE::toDto)
-                .toList();
+            .map(TaskMapper.INSTANCE::toDto)
+            .toList();
     }
 
     public OfferDto createOffer(Long taskId, Long userId, BigDecimal price) {
         log.info("Create offer taskId: " + taskId + " userID: " + userId);
-        var task = findByIdOrThrow(taskRepository, taskId);
+        var task = JpaUtils.findByIdOrThrow(taskRepository, taskId);
         var offer = new Offer()
-                .setPrice(price)
-                .setUser(findByIdOrThrow(userRepository, userId));
+            .setPrice(price)
+            .setUser(JpaUtils.findByIdOrThrow(userRepository, userId));
         offerRepository.save(offer);
         task.addOffer(offer);
         return OfferMapper.INSTANCE.toDto(offer);
     }
 
     public TaskDto closeTask(Long taskId) {
-        return TaskMapper.INSTANCE.toDto(findByIdOrThrow(taskRepository, taskId).closeTask());
+        return TaskMapper.INSTANCE.toDto(JpaUtils.findByIdOrThrow(taskRepository, taskId).closeTask());
     }
 
     public List<TaskDto> getFilteredTasks(Set<Long> subjectsId) {
         return taskRepository.findAllBySubjectIdIn(subjectsId).stream()
-                .map(TaskMapper.INSTANCE::toDto)
-                .toList();
+            .map(TaskMapper.INSTANCE::toDto)
+            .toList();
     }
-
-    private <T> T findByIdOrThrow(JpaRepository<T, Long> repository, Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
 }

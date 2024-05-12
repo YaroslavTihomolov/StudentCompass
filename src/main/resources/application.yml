@@ -1,14 +1,14 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/student_compass
+    url: jdbc:postgresql://localhost:5432/student_compass
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
-  flyway:
-    user: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/system_philharmonic_database}
-    baselineOnMigrate: true
+#  flyway:
+#    user: ${SPRING_DATASOURCE_USERNAME:postgres}
+#    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+#    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/system_philharmonic_database}
+#    baselineOnMigrate: true
 
   jpa:
     hibernate:
