@@ -20,8 +20,8 @@ public class TaskController {
     private final TaskService taskService;
 
     @PutMapping("/create_task")
-    public ResponseEntity<TaskDto> createTask(@RequestParam String title, @RequestParam String description, @RequestParam String startPrice, @RequestParam Long subjectId) {
-        return ResponseEntity.ok(taskService.createTask(title, description, startPrice, subjectId));
+    public ResponseEntity<TaskDto> createTask(@RequestParam String title, @RequestParam String description, @RequestParam String startPrice, @RequestParam String subjectName) {
+        return ResponseEntity.ok(taskService.createTask(title, description, startPrice, subjectName));
     }
 
     @GetMapping("/tasks")
@@ -30,8 +30,8 @@ public class TaskController {
     }
 
     @GetMapping("/filter_task")
-    public ResponseEntity<List<TaskDto>> getTasks(@RequestParam Set<Long> subjectsId) {
-        return ResponseEntity.ok(taskService.getFilteredTasks(subjectsId));
+    public ResponseEntity<List<TaskDto>> getTasks(@RequestParam Set<String> subjectNames) {
+        return ResponseEntity.ok(taskService.getFilteredTasks(subjectNames));
     }
 
     @GetMapping("/close_task")
@@ -42,6 +42,11 @@ public class TaskController {
     @PutMapping("/task/add_offer")
     public ResponseEntity<OfferDto> createOffer(@RequestParam Long taskId, @RequestParam Long userId, @RequestParam BigDecimal price) {
         return ResponseEntity.ok(taskService.createOffer(taskId, userId, price));
+    }
+
+    @GetMapping("/get_offers")
+    public ResponseEntity<List<OfferDto>> getTaskOffers(@RequestParam Long taskId) {
+        return ResponseEntity.ok(taskService.getOffers(taskId));
     }
 
 

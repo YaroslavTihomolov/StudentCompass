@@ -32,7 +32,7 @@ public class Task {
     private List<Offer> offers;
 
     @OneToOne
-    private Subject subject;
+    private SubjectName subjectName;
 
     public void addOffer(Offer offer) {
         offers.add(offer);

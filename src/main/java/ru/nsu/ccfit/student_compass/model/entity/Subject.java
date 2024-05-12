@@ -17,8 +17,8 @@ public class Subject {
     @Column
     private Long id;
 
-    @Column
-    private String name;
+    @OneToOne
+    private SubjectName subjectName;
 
     @ManyToOne
     @JoinColumn(name = "course_id")

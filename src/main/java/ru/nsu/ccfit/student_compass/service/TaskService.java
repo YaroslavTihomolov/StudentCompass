@@ -11,10 +11,7 @@ import ru.nsu.ccfit.student_compass.model.entity.Offer;
 import ru.nsu.ccfit.student_compass.model.entity.Task;
 import ru.nsu.ccfit.student_compass.model.mapper.OfferMapper;
 import ru.nsu.ccfit.student_compass.model.mapper.TaskMapper;
-import ru.nsu.ccfit.student_compass.repository.OfferRepository;
-import ru.nsu.ccfit.student_compass.repository.SubjectRepository;
-import ru.nsu.ccfit.student_compass.repository.TaskRepository;
-import ru.nsu.ccfit.student_compass.repository.UserRepository;
+import ru.nsu.ccfit.student_compass.repository.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,7 +30,9 @@ public class TaskService {
 
     private final OfferRepository offerRepository;
 
-    public TaskDto createTask(String title, String description, String startPrice, Long subjectId) {
+    private final SubjectNameRepository subjectNameRepository;
+
+    public TaskDto createTask(String title, String description, String startPrice, String subjectName) {
         log.info("Create task: " + title);
         return TaskMapper.INSTANCE.toDto(
                 taskRepository.save(
@@ -41,7 +40,7 @@ public class TaskService {
                                 .setTitle(title)
                                 .setStartPrice(startPrice)
                                 .setDescription(description)
-                                .setSubject(findByIdOrThrow(subjectRepository, subjectId))
+                                .setSubjectName(subjectNameRepository.findSubjectNameByName(subjectName))
                 )
         );
     }
@@ -68,8 +67,8 @@ public class TaskService {
         return TaskMapper.INSTANCE.toDto(findByIdOrThrow(taskRepository, taskId).closeTask());
     }
 
-    public List<TaskDto> getFilteredTasks(Set<Long> subjectsId) {
-        return taskRepository.findAllBySubjectIdIn(subjectsId).stream()
+    public List<TaskDto> getFilteredTasks(Set<String> subjectNames) {
+        return taskRepository.findAllBySubjectNameNameIn(subjectNames).stream()
                 .map(TaskMapper.INSTANCE::toDto)
                 .toList();
     }
@@ -78,4 +77,9 @@ public class TaskService {
         return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    public List<OfferDto> getOffers(Long taskId) {
+        return offerRepository.findAllByTaskId(taskId).stream()
+                .map(OfferMapper.INSTANCE::toDto)
+                .toList();
+    }
 }

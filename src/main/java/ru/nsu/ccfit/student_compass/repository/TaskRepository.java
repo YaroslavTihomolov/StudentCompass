@@ -8,6 +8,6 @@ import java.util.Set;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    List<Task> findAllBySubjectIdIn(Set<Long> subjectId);
+    List<Task> findAllBySubjectNameNameIn(Set<String> subjectNames);
 
 }
