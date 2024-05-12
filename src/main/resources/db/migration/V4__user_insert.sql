@@ -1,2 +1,2 @@
-insert into user_table(id, email, first_name, last_name, password, role)
-values (1, 'dkhoroshev@mail.ru','Дима', 'Хорошев', '1234', 'ADMIN');
+INSERT INTO public.user_table (id, email, first_name, last_name, password, role) VALUES (2, 'antony@mail.ru', 'Антон', 'Усольцев', '$2a$10$dXrCbWx/4j20uFLvlAl35Od/23bmVZsdpyKiWMJjLw.puCxi75duy', 'USER');
+INSERT INTO public.user_table (id, email, first_name, last_name, password, role) VALUES (53, 'makar@gmail.com', 'Макар', 'Михалев', '$2a$10$kdkICpGI3WIa9AZBSxaAfOaTT5WkJFYVUuBhQ8.Kvksq89qBgxESq', 'USER');
