@@ -12,7 +12,7 @@ import ru.nsu.ccfit.student_compass.model.entity.Subject;
 public interface SubjectMapper {
 
     SubjectMapper INSTANCE = Mappers.getMapper(SubjectMapper.class);
-
+    @Mapping(target = "name", expression = "java(subject.getSubjectName().getName())")
     SubjectDto toDto(Subject subject);
 
     @Mapping(source = "materials", target = "materials")

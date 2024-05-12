@@ -1,5 +1,3 @@
-insert into subject(id, name, course_id)
-values (1, 'ДГМА', 1),
-       (2, 'АЛГЕБРА', 2),
-       (3, 'РУССКИЙ ЯЗЫК', 3);
-
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (1, 1, 1);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (2, 1, 2);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (3, 1, 3);
