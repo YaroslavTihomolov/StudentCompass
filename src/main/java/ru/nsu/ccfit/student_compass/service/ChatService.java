@@ -65,12 +65,14 @@ public class ChatService {
     }
 
     @Nonnull
-    public List<MessageResponseDto> getMessage(ChatParamDto chatParamDto) {
+    public List<MessageResponseDto> getMessage(ChatParamDto chatParamDto, String jwt) {
+        User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
+            .orElseThrow(EntityNotFoundException::new);
+
         List<Message> userMessages = messageRepository.findAllByChatId(
             chatParamDto.chatId(),
             PageRequest.of(chatParamDto.numberPage(), chatParamDto.sizePage(), Sort.by("created"))
         );
-        User user = JpaUtils.findByIdOrThrow(userRepository, chatParamDto.userId());
 
         userMessages.forEach(message -> message.addViewed(user));
         return userMessages.stream()

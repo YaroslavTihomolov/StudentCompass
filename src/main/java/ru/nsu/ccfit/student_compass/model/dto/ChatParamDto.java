@@ -6,9 +6,6 @@ public record ChatParamDto(
     @RequestParam
     Long chatId,
 
-    @RequestParam
-    Long userId,
-
     @RequestParam(defaultValue = "1")
     int numberPage,
     @RequestParam(defaultValue = "10")

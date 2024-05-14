@@ -38,8 +38,12 @@ public class ChatController {
     }
 
     @GetMapping
-    public List<MessageResponseDto> getMessage(@Valid ChatParamDto chatParamDto) {
-        return chatService.getMessage(chatParamDto);
+    public List<MessageResponseDto> getMessage(
+        @Valid ChatParamDto chatParamDto,
+        @RequestHeader("Authorization") String authorizationHeader
+    ) {
+        String jwt = authorizationHeader.substring(7);
+        return chatService.getMessage(chatParamDto, jwt);
     }
 
     @GetMapping("/all")
