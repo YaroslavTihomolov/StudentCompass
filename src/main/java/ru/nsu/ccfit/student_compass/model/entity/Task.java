@@ -28,6 +28,9 @@ public class Task {
     @Setter(value = AccessLevel.PRIVATE)
     private boolean isClose;
 
+    @ManyToOne
+    private User user;
+
     @OneToMany(fetch = FetchType.EAGER)
     private List<Offer> offers;
 

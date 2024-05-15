@@ -20,13 +20,21 @@ public class TaskController {
     private final TaskService taskService;
 
     @PutMapping("/create_task")
-    public ResponseEntity<TaskDto> createTask(@RequestParam String title, @RequestParam String description, @RequestParam String startPrice, @RequestParam String subjectName) {
-        return ResponseEntity.ok(taskService.createTask(title, description, startPrice, subjectName));
+    public ResponseEntity<TaskDto> createTask(
+            @RequestParam String title,
+            @RequestParam String description,
+            @RequestParam String startPrice,
+            @RequestParam String subjectName,
+            @RequestHeader("Authorization") String authorizationHeader
+    ) {
+        String jwt = authorizationHeader.substring(7);
+        return ResponseEntity.ok(taskService.createTask(title, description, startPrice, subjectName, jwt));
     }
 
     @GetMapping("/tasks")
-    public ResponseEntity<List<TaskDto>> getTasks() {
-        return ResponseEntity.ok(taskService.getTasks());
+    public ResponseEntity<List<TaskDto>> getTasks(@RequestHeader("Authorization") String authorizationHeader) {
+        String jwt = authorizationHeader.substring(7);
+        return ResponseEntity.ok(taskService.getTasks(jwt));
     }
 
     @GetMapping("/filter_task")
@@ -40,8 +48,13 @@ public class TaskController {
     }
 
     @PutMapping("/task/add_offer")
-    public ResponseEntity<OfferDto> createOffer(@RequestParam Long taskId, @RequestParam Long userId, @RequestParam BigDecimal price) {
-        return ResponseEntity.ok(taskService.createOffer(taskId, userId, price));
+    public ResponseEntity<OfferDto> createOffer(
+            @RequestParam Long taskId,
+            @RequestParam BigDecimal price,
+            @RequestHeader("Authorization") String authorizationHeader
+    ) {
+        String jwt = authorizationHeader.substring(7);
+        return ResponseEntity.ok(taskService.createOffer(taskId, price, jwt));
     }
 
     @GetMapping("/get_offers")

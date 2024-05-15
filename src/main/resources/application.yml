@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/student_compass
-    username: postgres
-    password: postgres
+    username: root
+    password: 6363
     driver-class-name: org.postgresql.Driver
 #  flyway:
 #    user: ${SPRING_DATASOURCE_USERNAME:postgres}

@@ -9,12 +9,15 @@ import ru.nsu.ccfit.student_compass.model.dto.OfferDto;
 import ru.nsu.ccfit.student_compass.model.dto.TaskDto;
 import ru.nsu.ccfit.student_compass.model.entity.Offer;
 import ru.nsu.ccfit.student_compass.model.entity.Task;
+import ru.nsu.ccfit.student_compass.model.entity.User;
 import ru.nsu.ccfit.student_compass.model.mapper.OfferMapper;
 import ru.nsu.ccfit.student_compass.model.mapper.TaskMapper;
 import ru.nsu.ccfit.student_compass.repository.*;
+import ru.nsu.ccfit.student_compass.utils.JwtUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -32,7 +35,10 @@ public class TaskService {
 
     private final SubjectNameRepository subjectNameRepository;
 
-    public TaskDto createTask(String title, String description, String startPrice, String subjectName) {
+    public TaskDto createTask(String title, String description, String startPrice, String subjectName, String jwt) {
+        User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
+                .orElseThrow(EntityNotFoundException::new);
+
         log.info("Create task: " + title);
         return TaskMapper.INSTANCE.toDto(
                 taskRepository.save(
@@ -41,23 +47,38 @@ public class TaskService {
                                 .setStartPrice(startPrice)
                                 .setDescription(description)
                                 .setSubjectName(subjectNameRepository.findSubjectNameByName(subjectName))
+                                .setUser(user)
                 )
         );
     }
 
-    public List<TaskDto> getTasks() {
+    public List<TaskDto> getTasks(String jwt) {
+        User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
+                .orElseThrow(EntityNotFoundException::new);
+
         log.info("Get all tasks");
         return taskRepository.findAll().stream()
-                .map(TaskMapper.INSTANCE::toDto)
+                .map(task -> TaskDto
+                        .builder()
+                        .id(task.getId())
+                        .createByCurrentUser(Objects.equals(task.getUser().getId(), user.getId()))
+                        .description(task.getDescription())
+                        .subjectName(task.getSubjectName().getName())
+                        .title(task.getTitle())
+                        .startPrice(task.getStartPrice())
+                        .build())
                 .toList();
     }
 
-    public OfferDto createOffer(Long taskId, Long userId, BigDecimal price) {
-        log.info("Create offer taskId: " + taskId + " userID: " + userId);
+    public OfferDto createOffer(Long taskId, BigDecimal price, String jwt) {
+        log.info("Create offer taskId: " + taskId);
         var task = findByIdOrThrow(taskRepository, taskId);
+        User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
+                .orElseThrow(EntityNotFoundException::new);
+
         var offer = new Offer()
                 .setPrice(price)
-                .setUser(findByIdOrThrow(userRepository, userId));
+                .setUser(user);
         offerRepository.save(offer);
         task.addOffer(offer);
         return OfferMapper.INSTANCE.toDto(offer);
