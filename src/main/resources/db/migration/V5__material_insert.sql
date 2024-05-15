@@ -1,1 +1,8 @@
-INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (1, 'Кожанов А.И', 'https://drive.google.com/file/d/1eVpaHt5W0x0TT9uIcjExTYEFSf6PtdJd/view', 'ДГМА', 1, 2);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (1, 'Кожанов А.И.', 'https://drive.google.com/file/d/1eVpaHt5W0x0TT9uIcjExTYEFSf6PtdJd/view', 'ДГМА', 4, 2);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (2, 'Перегожин А.Л.', 'https://drive.google.com/file/d/1w3OBAlkJPDCDC11mMhUKtTRH4cr77b-P/view', 'Дискретная математика', 8, 53);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (3, 'Перегожин А.Л.', 'https://drive.google.com/file/d/1kYjJ1iUbme5_QcmnjgtLO7UOJG76zmdr/view', 'Дискретная математика (сборник задач)', 8, 2);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (4, 'Шваб И.В.', 'https://drive.google.com/file/d/1xUbcqvgQSfgnvEQTxevStSiL0H-Rj_y6/view', 'Методы решения задач по функциональному анализу', 4, 53);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (5, 'Страуструп Б.', 'https://drive.google.com/file/d/1gSc6fFinso6N1AiKdqCOggKuTYUTyqzP/view', 'Язык программирования C++', 6, 2);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (6, 'Александреску А.', 'https://drive.google.com/file/d/1yJ1gH5hAVDu7hfM8Zv76IaZi-9eFnwfJ/view', 'Современное проектирование на C++', 6, 2);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (7, 'Ожегов И.С.', 'https://slovarozhegova.ru/', 'Толковый словарь Ожегова', 1, 53);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (8, 'Муратов М.А', 'https://drive.google.com/drive/folders/1FyDxypDEoQxk4elAuSqQeiIP9XIqUmWS', 'Вопросы по экзамену 2023', 2, 2);
