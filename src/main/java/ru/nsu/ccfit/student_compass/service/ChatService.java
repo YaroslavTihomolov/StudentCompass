@@ -56,10 +56,16 @@ public class ChatService {
             ).getId();
     }
 
-    public void addMessage(MessageDto messageDto) {
-        log.info("addMessage:: user add userMessage: " + messageDto.userName());
+    public void addMessage(MessageDto messageDto, String jwt) {
+        User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
+            .orElseThrow(EntityNotFoundException::new);
+
+        String userName = "%s %s".formatted(user.getFirstName(), user.getLastName());
+        log.info("addMessage:: user add userMessage: " + userName);
+
+
         Message userMessage = new Message()
-            .setUserName(messageDto.userName())
+            .setUserName(userName)
             .setText(messageDto.text());
         chatRepository.save(JpaUtils.findByIdOrThrow(chatRepository, messageDto.chatId()).addMessage(userMessage));
     }
@@ -74,7 +80,6 @@ public class ChatService {
             PageRequest.of(chatParamDto.numberPage(), chatParamDto.sizePage(), Sort.by("created"))
         );
 
-        userMessages.forEach(message -> message.addViewed(user));
         return userMessages.stream()
             .map(MessageMapper.INSTANCE::toDto)
             .toList();

@@ -33,8 +33,12 @@ public class ChatController {
     }
 
     @PutMapping
-    public void addMessage(@RequestBody MessageDto messageDto) {
-        chatService.addMessage(messageDto);
+    public void addMessage(
+        @RequestBody MessageDto messageDto,
+        @RequestHeader("Authorization") String authorizationHeader
+    ) {
+        String jwt = authorizationHeader.substring(7);
+        chatService.addMessage(messageDto, jwt);
     }
 
     @GetMapping
