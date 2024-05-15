@@ -6,11 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import ru.nsu.ccfit.student_compass.model.dto.OfferDto;
+import ru.nsu.ccfit.student_compass.model.dto.SubjectDto;
 import ru.nsu.ccfit.student_compass.model.dto.TaskDto;
 import ru.nsu.ccfit.student_compass.model.entity.Offer;
 import ru.nsu.ccfit.student_compass.model.entity.Task;
 import ru.nsu.ccfit.student_compass.model.entity.User;
 import ru.nsu.ccfit.student_compass.model.mapper.OfferMapper;
+import ru.nsu.ccfit.student_compass.model.mapper.SubjectNameMapper;
 import ru.nsu.ccfit.student_compass.model.mapper.TaskMapper;
 import ru.nsu.ccfit.student_compass.repository.*;
 import ru.nsu.ccfit.student_compass.utils.JwtUtils;
@@ -40,16 +42,23 @@ public class TaskService {
                 .orElseThrow(EntityNotFoundException::new);
 
         log.info("Create task: " + title);
-        return TaskMapper.INSTANCE.toDto(
-                taskRepository.save(
-                        new Task()
-                                .setTitle(title)
-                                .setStartPrice(startPrice)
-                                .setDescription(description)
-                                .setSubjectName(subjectNameRepository.findSubjectNameByName(subjectName))
-                                .setUser(user)
-                )
+        Task task = taskRepository.save(
+                new Task()
+                        .setTitle(title)
+                        .setStartPrice(startPrice)
+                        .setDescription(description)
+                        .setSubjectName(subjectNameRepository.findSubjectNameByName(subjectName))
+                        .setUser(user)
         );
+
+        return TaskDto.builder()
+                .id(task.getId())
+                .createByCurrentUser(true)
+                .description(task.getDescription())
+                .subjectName(task.getSubjectName().getName())
+                .title(task.getTitle())
+                .startPrice(task.getStartPrice())
+                .build();
     }
 
     public List<TaskDto> getTasks(String jwt) {
@@ -78,6 +87,7 @@ public class TaskService {
 
         var offer = new Offer()
                 .setPrice(price)
+                .setTask(task)
                 .setUser(user);
         offerRepository.save(offer);
         task.addOffer(offer);
@@ -102,5 +112,9 @@ public class TaskService {
         return offerRepository.findAllByTaskId(taskId).stream()
                 .map(OfferMapper.INSTANCE::toDto)
                 .toList();
+    }
+
+    public List<SubjectDto> getSubjects() {
+        return subjectNameRepository.findAll().stream().map(SubjectNameMapper.INSTANCE::toDto).toList();
     }
 }

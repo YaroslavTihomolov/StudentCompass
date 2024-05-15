@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.ccfit.student_compass.model.dto.OfferDto;
+import ru.nsu.ccfit.student_compass.model.dto.SubjectDto;
 import ru.nsu.ccfit.student_compass.model.dto.TaskDto;
 import ru.nsu.ccfit.student_compass.service.TaskService;
 
@@ -21,14 +22,11 @@ public class TaskController {
 
     @PutMapping("/create_task")
     public ResponseEntity<TaskDto> createTask(
-            @RequestParam String title,
-            @RequestParam String description,
-            @RequestParam String startPrice,
-            @RequestParam String subjectName,
+            @RequestBody TaskDto taskDto,
             @RequestHeader("Authorization") String authorizationHeader
     ) {
         String jwt = authorizationHeader.substring(7);
-        return ResponseEntity.ok(taskService.createTask(title, description, startPrice, subjectName, jwt));
+        return ResponseEntity.ok(taskService.createTask(taskDto.title(), taskDto.description(), taskDto.startPrice(), taskDto.subjectName(), jwt));
     }
 
     @GetMapping("/tasks")
@@ -47,12 +45,13 @@ public class TaskController {
         return ResponseEntity.ok(taskService.closeTask(taskId));
     }
 
-    @PutMapping("/task/add_offer")
+    @PostMapping("/task/add_offer")
     public ResponseEntity<OfferDto> createOffer(
             @RequestParam Long taskId,
             @RequestParam BigDecimal price,
             @RequestHeader("Authorization") String authorizationHeader
     ) {
+
         String jwt = authorizationHeader.substring(7);
         return ResponseEntity.ok(taskService.createOffer(taskId, price, jwt));
     }
@@ -60,6 +59,11 @@ public class TaskController {
     @GetMapping("/get_offers")
     public ResponseEntity<List<OfferDto>> getTaskOffers(@RequestParam Long taskId) {
         return ResponseEntity.ok(taskService.getOffers(taskId));
+    }
+
+    @GetMapping("/get_subjects")
+    public ResponseEntity<List<SubjectDto>> getTaskOffers() {
+        return ResponseEntity.ok(taskService.getSubjects());
     }
 
 
