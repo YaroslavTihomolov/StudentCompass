@@ -1,2 +1,4 @@
 INSERT INTO public.user_table (id, email, first_name, last_name, password, role) VALUES (2, 'antony@mail.ru', 'Антон', 'Усольцев', '$2a$10$dXrCbWx/4j20uFLvlAl35Od/23bmVZsdpyKiWMJjLw.puCxi75duy', 'USER');
 INSERT INTO public.user_table (id, email, first_name, last_name, password, role) VALUES (53, 'makar@gmail.com', 'Макар', 'Михалев', '$2a$10$kdkICpGI3WIa9AZBSxaAfOaTT5WkJFYVUuBhQ8.Kvksq89qBgxESq', 'USER');
+INSERT INTO public.user_table (id, email, first_name, last_name, password, role) VALUES (102, 'yarik@gmail.com', 'Ярослав', 'Тихомолов', '$2a$10$fQpLkwhG1k6K24IwYQ3dyORZm8I1kyLOjvYAaapn0L6i5qmtlpNCm', 'USER');
+INSERT INTO public.user_table (id, email, first_name, last_name, password, role) VALUES (103, 'nikita@gmail.com', 'Никита', 'Осьмушкин', '$2a$10$9NG7MudYHmS9N8dC/hG9v.Mur3Qyj7AkLSNzDe6S0F6Vn9Dr60hdG', 'USER');
