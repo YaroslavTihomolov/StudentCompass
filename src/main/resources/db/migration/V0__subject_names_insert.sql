@@ -10,5 +10,4 @@ INSERT INTO public.subject_name (id, name) VALUES (9, 'Математический анализ');
 INSERT INTO public.subject_name (id, name) VALUES (10, 'Дискретная математика');
 INSERT INTO public.subject_name (id, name) VALUES (11, 'Философия');
 INSERT INTO public.subject_name (id, name) VALUES (12, 'Экономика');
-INSERT INTO public.subject_name (id, name) VALUES (13, 'Аналитическая геометрия и линейная алгебра');
-INSERT INTO public.subject_name (id, name) VALUES (14, 'Матматическая логика и теория алгоритмов');
+INSERT INTO public.subject_name (id, name) VALUES (13, 'Матматическая логика и теория алгоритмов');

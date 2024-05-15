@@ -1,5 +1,5 @@
-INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (8, 'Муратов М.А.', 'https://drive.google.com/drive/folders/1FyDxypDEoQxk4elAuSqQeiIP9XIqUmWS', 'Вопросы по экзамену 2023', 2, 2);
 INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (1, 'Кожанов А.И.', 'https://drive.google.com/file/d/1eVpaHt5W0x0TT9uIcjExTYEFSf6PtdJd/view', 'ДГМА', 1, 2);
+INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (8, 'Муратов М.А.', 'https://drive.google.com/drive/folders/1FyDxypDEoQxk4elAuSqQeiIP9XIqUmWS', 'Вопросы по экзамену 2023', 4, 2);
 INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (18, 'Муратов М.А.', 'https://drive.google.com/drive/folders/1KKaNYqdSqwWKVW3G5Fb4aNKbMwMODGRe', 'Вопросы к экзамену (2020, 2 семестр)', 10, 2);
 INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (19, 'Муратов М.А.', 'https://drive.google.com/drive/folders/1mDOqvYVmuncS5l9G15HR0RYSIO-qKNQK', 'Вопросы к экзамену (2019, 2 семестр)', 10, 53);
 INSERT INTO public.material (id, author, link, name, subject_id, user_id) VALUES (7, 'Ожегов И.С.', 'https://slovarozhegova.ru/', 'Толковый словарь Ожегова', 3, 53);
