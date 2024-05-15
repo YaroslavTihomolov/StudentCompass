@@ -1,8 +1,12 @@
-INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (1, 1, 1);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (1, 2, 1);
 INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (2, 1, 2);
 INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (3, 1, 3);
-INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (4, 2, 4);
-INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (5, 2, 5);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (4, 1, 4);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (5, 1, 5);
 INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (6, 2, 6);
 INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (7, 2, 7);
-INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (8, 2, 9);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (8, 1, 9);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (9, 2, 8);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (10, 1, 14);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (11, 1, 13);
+INSERT INTO public.subject (id, course_id, subject_name_id) VALUES (12, 2, 11);

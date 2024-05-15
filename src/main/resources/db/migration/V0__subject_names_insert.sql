@@ -1,7 +1,7 @@
 INSERT INTO public.subject_name (id, name) VALUES (1, 'ДГМА');
-INSERT INTO public.subject_name (id, name) VALUES (2, 'Алгебра');
+INSERT INTO public.subject_name (id, name) VALUES (2, 'Аналитическая геометрия и линейная алгебра');
 INSERT INTO public.subject_name (id, name) VALUES (3, 'Русский язык');
-INSERT INTO public.subject_name (id, name) VALUES (4, 'История');
+INSERT INTO public.subject_name (id, name) VALUES (4, 'История России');
 INSERT INTO public.subject_name (id, name) VALUES (5, 'Информатика');
 INSERT INTO public.subject_name (id, name) VALUES (6, 'ОПП');
 INSERT INTO public.subject_name (id, name) VALUES (7, 'C++');
@@ -10,3 +10,5 @@ INSERT INTO public.subject_name (id, name) VALUES (9, 'Математический анализ');
 INSERT INTO public.subject_name (id, name) VALUES (10, 'Дискретная математика');
 INSERT INTO public.subject_name (id, name) VALUES (11, 'Философия');
 INSERT INTO public.subject_name (id, name) VALUES (12, 'Экономика');
+INSERT INTO public.subject_name (id, name) VALUES (13, 'Аналитическая геометрия и линейная алгебра');
+INSERT INTO public.subject_name (id, name) VALUES (14, 'Матматическая логика и теория алгоритмов');
