@@ -8,11 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.nsu.ccfit.student_compass.model.dto.ChatDto;
-import ru.nsu.ccfit.student_compass.model.dto.ChatParamDto;
-import ru.nsu.ccfit.student_compass.model.dto.CreateChatDto;
-import ru.nsu.ccfit.student_compass.model.dto.MessageDto;
-import ru.nsu.ccfit.student_compass.model.dto.MessageResponseDto;
+import ru.nsu.ccfit.student_compass.model.dto.*;
 import ru.nsu.ccfit.student_compass.model.entity.Chat;
 import ru.nsu.ccfit.student_compass.model.entity.Message;
 import ru.nsu.ccfit.student_compass.model.entity.User;
@@ -38,9 +34,9 @@ public class ChatService {
     public List<ChatDto> getChats(String jwt) {
         String email = JwtUtils.decodeJWT(jwt);
         return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new)
-            .getChats().stream()
-            .map(ChatMapper.INSTANCE::toDto)
-            .toList();
+                .getChats().stream()
+                .map(ChatMapper.INSTANCE::toDto)
+                .toList();
     }
 
     @Nonnull
@@ -50,38 +46,39 @@ public class ChatService {
             throw new EntityExistsException();
         }
         return new Chat()
-            .setName(createChatDto.name())
-            .setUser(
-                new HashSet<>(userRepository.findAllById(createChatDto.userIds()))
-            ).getId();
+                .setName(createChatDto.name())
+                .setUser(
+                        new HashSet<>(userRepository.findAllById(createChatDto.userIds()))
+                ).getId();
     }
 
     public void addMessage(MessageDto messageDto, String jwt) {
         User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
-            .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(EntityNotFoundException::new);
 
         String userName = "%s %s".formatted(user.getFirstName(), user.getLastName());
         log.info("addMessage:: user add userMessage: " + userName);
 
 
         Message userMessage = new Message()
-            .setUserName(userName)
-            .setText(messageDto.text());
+                .setUserName(userName)
+                .setText(messageDto.text());
         chatRepository.save(JpaUtils.findByIdOrThrow(chatRepository, messageDto.chatId()).addMessage(userMessage));
     }
 
     @Nonnull
     public List<MessageResponseDto> getMessage(ChatParamDto chatParamDto, String jwt) {
         User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
-            .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(EntityNotFoundException::new);
 
         List<Message> userMessages = messageRepository.findAllByChatId(
-            chatParamDto.chatId(),
-            PageRequest.of(chatParamDto.numberPage(), chatParamDto.sizePage(), Sort.by("created"))
+                chatParamDto.chatId(),
+                PageRequest.of(chatParamDto.numberPage(), chatParamDto.sizePage(), Sort.by(Sort.Direction.DESC, "created"))
         );
 
+        System.out.println(userMessages);
         return userMessages.stream()
-            .map(MessageMapper.INSTANCE::toDto)
-            .toList();
+                .map(MessageMapper.INSTANCE::toDto)
+                .toList();
     }
 }

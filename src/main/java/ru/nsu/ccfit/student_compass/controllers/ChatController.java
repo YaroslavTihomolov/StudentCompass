@@ -1,22 +1,10 @@
 package ru.nsu.ccfit.student_compass.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import ru.nsu.ccfit.student_compass.model.dto.ChatDto;
-import ru.nsu.ccfit.student_compass.model.dto.ChatParamDto;
-import ru.nsu.ccfit.student_compass.model.dto.CreateChatDto;
-import ru.nsu.ccfit.student_compass.model.dto.MessageDto;
-import ru.nsu.ccfit.student_compass.model.dto.MessageResponseDto;
+import org.springframework.web.bind.annotation.*;
+import ru.nsu.ccfit.student_compass.model.dto.*;
 import ru.nsu.ccfit.student_compass.service.ChatService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -32,28 +20,26 @@ public class ChatController {
         return chatService.createChat(createChatDto);
     }
 
-    @PutMapping
-    public void addMessage(
-        @RequestBody MessageDto messageDto,
-        @RequestHeader("Authorization") String authorizationHeader
-    ) {
+    @PostMapping("/new_message")
+    public void addMessage(@RequestBody MessageDto messageDto,
+                           @RequestHeader("Authorization") String authorizationHeader) {
         String jwt = authorizationHeader.substring(7);
         chatService.addMessage(messageDto, jwt);
     }
 
     @GetMapping
-    public List<MessageResponseDto> getMessage(
-        @Valid ChatParamDto chatParamDto,
-        @RequestHeader("Authorization") String authorizationHeader
-    ) {
+    public List<MessageResponseDto> getMessage(@RequestParam Long chatId,
+                                               @RequestParam int numberPage,
+                                               @RequestParam int sizePage,
+                                               @RequestHeader("Authorization") String authorizationHeader) {
+        System.out.println(chatId);
+        ChatParamDto chatParams = new ChatParamDto(chatId, numberPage, sizePage);
         String jwt = authorizationHeader.substring(7);
-        return chatService.getMessage(chatParamDto, jwt);
+        return chatService.getMessage(chatParams, jwt);
     }
 
     @GetMapping("/all")
-    public List<ChatDto> getChats(
-        @RequestHeader("Authorization") String authorizationHeader
-    ) {
+    public List<ChatDto> getChats(@RequestHeader("Authorization") String authorizationHeader) {
         String jwt = authorizationHeader.substring(7);
         return chatService.getChats(jwt);
     }
