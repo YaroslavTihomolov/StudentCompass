@@ -34,55 +34,55 @@ public class ChatService {
     public List<ChatDto> getChats(String jwt) {
         String email = JwtUtils.decodeJWT(jwt);
         return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new)
-                .getChats().stream()
-                .map(ChatMapper.INSTANCE::toDto)
-                .toList();
+            .getChats().stream()
+            .map(ChatMapper.INSTANCE::toDto)
+            .toList();
     }
 
     @Nonnull
     public Long createChat(CreateChatDto createChatDto, String jwt) {
         User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
-                .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(EntityNotFoundException::new);
         createChatDto.userIds().add(user.getId());
         log.info("createChat:: chat name " + createChatDto.name());
 
         if (chatRepository.existsByName(createChatDto.name())) {
             throw new EntityExistsException();
         }
-        return new Chat()
-                .setName(createChatDto.name())
-                .setUser(
-                        new HashSet<>(userRepository.findAllById(createChatDto.userIds()))
-                ).getId();
+        return chatRepository.save(new Chat()
+            .setName(createChatDto.name())
+            .setUser(
+                new HashSet<>(userRepository.findAllById(createChatDto.userIds()))
+            )).getId();
     }
 
     public void addMessage(MessageDto messageDto, String jwt) {
         User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
-                .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(EntityNotFoundException::new);
 
         String userName = "%s %s".formatted(user.getFirstName(), user.getLastName());
         log.info("addMessage:: user add userMessage: " + userName);
 
 
         Message userMessage = new Message()
-                .setUserName(userName)
-                .setText(messageDto.text());
+            .setUserName(userName)
+            .setText(messageDto.text());
         chatRepository.save(JpaUtils.findByIdOrThrow(chatRepository, messageDto.chatId()).addMessage(userMessage));
     }
 
     @Nonnull
     public List<MessageResponseDto> getMessage(ChatParamDto chatParamDto, String jwt) {
         User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
-                .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(EntityNotFoundException::new);
 
         List<Message> userMessages = messageRepository.findAllByChatId(
-                chatParamDto.chatId(),
-                PageRequest.of(chatParamDto.numberPage(), chatParamDto.sizePage(), Sort.by(Sort.Direction.DESC, "created"))
+            chatParamDto.chatId(),
+            PageRequest.of(chatParamDto.numberPage(), chatParamDto.sizePage(), Sort.by(Sort.Direction.DESC, "created"))
         );
 
         System.out.println(userMessages);
         return userMessages.stream()
-                .map(MessageMapper.INSTANCE::toDto)
-                .toList();
+            .map(MessageMapper.INSTANCE::toDto)
+            .toList();
     }
 }
