@@ -40,8 +40,12 @@ public class ChatService {
     }
 
     @Nonnull
-    public Long createChat(CreateChatDto createChatDto) {
+    public Long createChat(CreateChatDto createChatDto, String jwt) {
+        User user = userRepository.findByEmail(JwtUtils.decodeJWT(jwt))
+                .orElseThrow(EntityNotFoundException::new);
+        createChatDto.userIds().add(user.getId());
         log.info("createChat:: chat name " + createChatDto.name());
+
         if (chatRepository.existsByName(createChatDto.name())) {
             throw new EntityExistsException();
         }

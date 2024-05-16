@@ -40,7 +40,7 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getFilteredTasks(subjectNames));
     }
 
-    @GetMapping("/close_task")
+    @PostMapping("/close_task")
     public ResponseEntity<TaskDto> closeTask(@RequestParam Long taskId) {
         return ResponseEntity.ok(taskService.closeTask(taskId));
     }

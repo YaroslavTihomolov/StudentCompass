@@ -16,8 +16,10 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping
-    public Long createChat(@RequestBody CreateChatDto createChatDto) {
-        return chatService.createChat(createChatDto);
+    public Long createChat(@RequestBody CreateChatDto createChatDto,  @RequestHeader("Authorization") String authorizationHeader) {
+        String jwt = authorizationHeader.substring(7);
+
+        return chatService.createChat(createChatDto, jwt);
     }
 
     @PostMapping("/new_message")
