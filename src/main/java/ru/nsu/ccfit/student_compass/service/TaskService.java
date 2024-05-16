@@ -95,6 +95,7 @@ public class TaskService {
     }
 
     public TaskDto closeTask(Long taskId) {
+        log.info("Try to close task with id ={} ", taskId);
         return TaskMapper.INSTANCE.toDto(findByIdOrThrow(taskRepository, taskId).closeTask());
     }
 

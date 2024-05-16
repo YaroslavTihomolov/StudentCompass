@@ -42,7 +42,7 @@ public class Task {
     }
 
     public Task closeTask() {
-        this.isClose = true;
+        setClose(true);
         return this;
     }
 
